@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using SocialNetwork.Domain.Entities;
+using reasearchweb.Domain.Entities;
 
-namespace SocialNetwork.Infrastructure.Data;
+namespace reasearchweb.Infrastructure.Data;
 
 public class ApplicationDbContext : DbContext
 {
