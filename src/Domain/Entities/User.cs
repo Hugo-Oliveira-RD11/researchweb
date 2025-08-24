@@ -2,16 +2,15 @@ namespace reasearchweb.Domain.Entities;
 
 public class User
 {
-  public Guid Id { get; private set; } = Guid.NewGuid();
+  public Guid Id { get; set; } = Guid.NewGuid();
   public string Username { get; private set; }
   public string Email { get; private set; }
   public string PasswordHash { get; private set; }
-  public DateTime BirthDate { get; private set; }
-  public string? ProfilePictureUrl { get; private set; }
-  public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
   public DateOnly BirthDate { get; private set; }
+  public string? ProfilePictureUrl { get;  set; }
+  public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-  public User(string username, string email, string passwordHash, DateTime birthDate)
+  public User(string username, string email, string passwordHash, DateOnly birthDate)
   {
     Username = username;
     Email = email;
@@ -21,6 +20,10 @@ public class User
 
   private User() { }
 
+  public void UpdateId(Guid id)
+  {
+    Id = id;
+  }
   public void UpdateProfilePicture(string url)
   {
     ProfilePictureUrl = url;
