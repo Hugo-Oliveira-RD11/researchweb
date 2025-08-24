@@ -1,4 +1,3 @@
-// src/Infra/Repositories/UserRepository.cs
 using Microsoft.EntityFrameworkCore;
 using reasearchweb.Application.Interfaces;
 using reasearchweb.Domain.Entities;
@@ -34,18 +33,35 @@ public class UserRepository : IUserRepository
     return entity == null ? null : ToDomain(entity);
   }
 
+  public async Task<User> GetByUsernameOrEmailAsync(string usernameOrEmail)
+  {
+    var entity = await _context.Users
+      .FirstOrDefaultAsync(u => u.Username == usernameOrEmail || u.Email == usernameOrEmail);
+
+    return entity == null ? null : ToDomain(entity);
+  }
+
   public async Task AddAsync(User user)
   {
     var entity = ToEntity(user);
     await _context.Users.AddAsync(entity);
     await _context.SaveChangesAsync();
 
+    // Atualiza o ID gerado no domínio
+    user.Id = entity.Id;
   }
 
   public async Task UpdateAsync(User user)
   {
     var entity = ToEntity(user);
     _context.Users.Update(entity);
+    await _context.SaveChangesAsync();
+  }
+
+  public async Task DeleteAsync(User user)
+  {
+    var entity = ToEntity(user);
+    _context.Users.Remove(entity);
     await _context.SaveChangesAsync();
   }
 
@@ -59,10 +75,6 @@ public class UserRepository : IUserRepository
     return await _context.Users.AnyAsync(u => u.Username == username);
   }
 
-  public async Task<User> GetByUsernameOrEmailAsync(string usernameOrEmail)
-  {
-    throw new NotImplementedException();
-  }
   private User ToDomain(UserEntity entity)
   {
     return new User(
@@ -72,12 +84,12 @@ public class UserRepository : IUserRepository
       entity.BirthDate)
     {
       Id = entity.Id,
-      ProfilePictureUrl = entity.ProfilePictureUrl,
-      CreatedAt = entity.CreatedAt 
-    };
+        ProfilePictureUrl = entity.ProfilePictureUrl,
+        CreatedAt = entity.CreatedAt
+        };
   }
 
-  private UserEntity ToEntity(User domain)
+  public UserEntity ToEntity(User domain)
   {
     return new UserEntity
     {
