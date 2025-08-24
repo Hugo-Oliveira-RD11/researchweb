@@ -9,6 +9,7 @@ public class User
   public DateTime BirthDate { get; private set; }
   public string? ProfilePictureUrl { get; private set; }
   public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
+  public DateOnly BirthDate { get; private set; }
 
   public User(string username, string email, string passwordHash, DateTime birthDate)
   {

@@ -14,5 +14,5 @@ public class CreateUserDto
   public string Password { get; set; }
 
   [Required]
-  public DateTime BirthDate { get; set; }
+  public DateOnly BirthDate { get; set; }
 }
