@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using reasearchweb.Domain.Entities;
 
-namespace reasearchweb.Infrastructure.Data;
+namespace reasearchweb.Infra.Data;
 
 public class ApplicationDbContext : DbContext
 {

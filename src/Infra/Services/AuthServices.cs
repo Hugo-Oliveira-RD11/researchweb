@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using reasearchweb.Application.Services;
 
-namespace reasearchweb.Infrastructure.Services;
+namespace reasearchweb.Infra.Services;
 
 public class AuthService : IAuthService
 {

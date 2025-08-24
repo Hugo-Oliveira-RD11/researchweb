@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using reasearchweb.Application.Interfaces;
 using reasearchweb.Domain.Entities;
-using reasearchweb.Infrastructure.Data;
+using reasearchweb.Infra.Data;
 
-namespace reasearchweb.Infrastructure.Repositories;
+namespace reasearchweb.Infra.Repositories;
 
 public class UserRepository : IUserRepository
 {
