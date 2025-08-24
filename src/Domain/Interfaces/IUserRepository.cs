@@ -11,4 +11,5 @@ public interface IUserRepository
   Task UpdateAsync(User user);
   Task<bool> ExistsByEmailAsync(string email);
   Task<bool> ExistsByUsernameAsync(string username);
+  Task<User> GetByUsernameOrEmailAsync(string usernameOrEmail);
 }
