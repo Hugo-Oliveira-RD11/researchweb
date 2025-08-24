@@ -1,0 +1,54 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: researchweb-api
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=researchweb;Username=postgres;Password=StrongPassword123!;Pooling=true;
+    depends_on:
+      - postgres
+    networks:
+      - researchweb-network
+    restart: unless-stopped
+
+  postgres:
+    image: docker.io/postgres:15-alpine
+    container_name: researchweb-postgres
+    environment:
+      - POSTGRES_DB=researchweb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=StrongPassword123!
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - researchweb-network
+    restart: unless-stopped
+
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   container_name: researchweb-pgadmin
+  #   environment:
+  #     - PGADMIN_DEFAULT_EMAIL=admin@researchweb.com
+  #     - PGADMIN_DEFAULT_PASSWORD=admin123
+  #   ports:
+  #     - "5050:80"
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - researchweb-network
+  #   restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  researchweb-network:
+    driver: bridge
