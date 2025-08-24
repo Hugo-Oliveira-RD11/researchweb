@@ -16,8 +16,7 @@ var jwtExpiration = builder.Configuration.GetValue<int>("Jwt:ExpirationInMinutes
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// builder.Services.AddInfraFastTest(connectionString, jwtSecret, jwtExpiration);
-// builder.Services.AddInfraPostgreSQL(connectionString, jwtSecret, jwtExpiration);
+builder.Services.AddInfraPostgreSQL(connectionString, jwtSecret, jwtExpiration);
 
 builder.Services.AddScoped<UserUseCases>();
 
@@ -37,20 +36,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docker")
 {
-  builder.Services.AddInfraFastTest(connectionString, jwtSecret, jwtExpiration);
-
-  app.MapOpenApi();
-  app.MapScalarApiReference("/docs");
-  using var scope = app.Services.CreateScope();
-  var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-  dbContext.Database.Migrate();
-}
-else
-{
-  builder.Services.AddInfraPostgreSQL(connectionString, jwtSecret, jwtExpiration);
-
   app.MapOpenApi();
   app.MapScalarApiReference("/docs");
   using var scope = app.Services.CreateScope();
