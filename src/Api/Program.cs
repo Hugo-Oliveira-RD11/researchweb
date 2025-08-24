@@ -23,39 +23,39 @@ builder.Services.AddScoped<UserUseCases>();
 
 var key = Encoding.ASCII.GetBytes(jwtSecret);
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+  .AddJwtBearer(options =>
+  {
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(key),
-            ValidateIssuer = false,
-            ValidateAudience = false
-        };
-    });
+      ValidateIssuerSigningKey = true,
+      IssuerSigningKey = new SymmetricSecurityKey(key),
+      ValidateIssuer = false,
+      ValidateAudience = false
+    };
+  });
 
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    builder.Services.AddInfraFastTest(connectionString, jwtSecret, jwtExpiration);
+  builder.Services.AddInfraFastTest(connectionString, jwtSecret, jwtExpiration);
 
-    app.MapOpenApi();
-    app.MapScalarApiReference("/docs");
-    using var scope = app.Services.CreateScope();
-    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    dbContext.Database.Migrate();
+  app.MapOpenApi();
+  app.MapScalarApiReference("/docs");
+  using var scope = app.Services.CreateScope();
+  var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+  dbContext.Database.Migrate();
 }
 else
 {
-    builder.Services.AddInfraPostgreSQL(connectionString, jwtSecret, jwtExpiration);
+  builder.Services.AddInfraPostgreSQL(connectionString, jwtSecret, jwtExpiration);
 
-    app.MapOpenApi();
-    app.MapScalarApiReference("/docs");
-    using var scope = app.Services.CreateScope();
-    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    dbContext.Database.Migrate();
+  app.MapOpenApi();
+  app.MapScalarApiReference("/docs");
+  using var scope = app.Services.CreateScope();
+  var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+  dbContext.Database.Migrate();
 }
 
 app.UseHttpsRedirection();

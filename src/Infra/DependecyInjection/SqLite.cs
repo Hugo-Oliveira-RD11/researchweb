@@ -10,19 +10,16 @@ namespace researchweb.Infra.DependecyInjection;
 
 public static class SqLite
 {
-    public static IServiceCollection AddInfraFastTest(this IServiceCollection services, string connectionString, string jwtSecret, int jwtExpirationInMinutes)
-    {
-        // Configurar DbContext
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlite(connectionString));
+  public static IServiceCollection AddInfraFastTest(this IServiceCollection services, string connectionString, string jwtSecret, int jwtExpirationInMinutes)
+  {
+    services.AddDbContext<ApplicationDbContext>(options =>
+                                                options.UseSqlite(connectionString));
 
-        // Registrar repositórios
-        services.AddScoped<IUserRepository, UserRepository>();
+    services.AddScoped<IUserRepository, UserRepository>();
 
-        // Registrar serviços - AGORA COM OS PARÂMETROS NECESSÁRIOS
-        services.AddScoped<IAuthService>(provider =>
-            new AuthService(jwtSecret, jwtExpirationInMinutes));
+    services.AddScoped<IAuthService>(provider =>
+                                     new AuthService(jwtSecret, jwtExpirationInMinutes));
 
-        return services;
-    }
+    return services;
+  }
 }
