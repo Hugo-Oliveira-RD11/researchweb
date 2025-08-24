@@ -1,0 +1,190 @@
+#+TITLE: ResearchWeb - Rede Social para Artigos Científicos
+#+AUTHOR: Hugo Oliveira
+#+LANGUAGE: pt-br
+
+* Sobre o Projeto
+** O que é o ResearchWeb?
+O ResearchWeb é uma rede social projetada para compartilhamento de conhecimento científico. Diferente de redes sociais tradicionais, o foco não é viciar o usuário, mas sim facilitar a transmissão de conhecimentos técnicos e profundos através de artigos científicos, bem como formas mais criativas e simplificadas de compartilhar conteúdo acadêmico.
+
+** Status Atual do Projeto (Fase 1 - Concluída)
+- [X] Backend com ASP.NET Core
+- [X] Estrutura em camadas (API + Domain + Infra + Application)
+- [X] Entidade User com cadastro e login (JWT)
+- [X] adicionando uma api para documentação (Scalar)
+- [X] Segurança de senha com bcrypt
+- [X] CRUD completo de usuários
+- [ ] Validators (FluentValidation)
+- [ ] criar os principais testes dessa etapa
+- [ ] Frontend (Próxima fase)
+
+* Pré-requisitos
+- [[https://dotnet.microsoft.com/download/dotnet/9.0][.NET 9.0 SDK]]
+- [[https://www.postgresql.org/download/][PostgreSQL]]
+- [[https://react.dev/][react]] (para o frontend - futuramente)
+
+* Como Executar o Projeto
+
+** Configuração do Banco de Dados
+#+BEGIN_SRC json
+// Configure a connection string no appsettings.json ou appsettings.Development.json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Port=5432;Database=researchweb;Username=postgres;Password=postgres;"
+  }
+}
+#+END_SRC
+
+** Método 1: Console (Dotnet CLI)
+*** Pré-requisitos
+- .NET 8.0 SDK
+- PostgreSQL instalado localmente
+
+*** Execução
+#+BEGIN_SRC bash
+# Navegue até o diretório da Infra para aplicar migrations
+cd src/ResearchWeb.Infra
+
+# Aplique as migrations
+dotnet ef database update
+
+# Volte para a pasta raiz e execute a API
+cd ../..
+dotnet run --project src/ResearchWeb.API/ResearchWeb.API.csproj
+
+# A API estará disponível em:
+# - HTTPS: https://localhost:7000
+# - HTTP: http://localhost:5000
+# - Scalar: https://localhost:7000/docs
+#+END_SRC
+
+** Método 2: Docker Compose
+*** Pré-requisitos
+- Docker
+- Docker Compose
+
+*** Execução
+#+BEGIN_SRC bash
+# Execute o docker compose para subir todos os serviços
+docker compose up
+
+# Ou execute em background:
+# docker compose up -d
+
+# Os serviços estarão disponíveis em:
+# - API: http://localhost:8080/docs (Scalar)
+# - PostgreSQL: localhost:5432
+
+# Para parar os containers:
+# docker compose down
+#+END_SRC
+
+** Método 3: Devbox (Opcional)
+*** Pré-requisitos
+- Devbox instalado: curl -fsSL https://get.jetify.com/devbox | bash
+
+*** Execução
+#+BEGIN_SRC bash
+# Entre no shell do devbox (instala todas as dependências automaticamente)
+devbox shell
+
+# Dentro do shell do devbox, execute com docker compose
+docker compose up
+
+# Ou use o devbox para executar diretamente (se preferir não usar Docker)
+devbox run start
+#+END_SRC
+
+** Arquivo docker-compose.yml de Exemplo
+#+BEGIN_SRC yaml
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: researchweb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=researchweb;Username=postgres;Password=postgres;"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
+
+volumes:
+  postgres_data:
+#+END_SRC
+
+** Testar a API
+Independente do método escolhido, após executar:
+- Acesse: http://localhost:8080/docs (Docker) ou https://localhost:7000/docs (Local)
+- Explore os endpoints de Users (/api/users)
+- Teste o registro e login para obter tokens JWT
+- Use o Scalar para testar a API interativamente
+
+* Estrutura do Projeto
+#+BEGIN_SRC
+ResearchWeb/
+├── src/
+│   ├── Api/          # Camada de apresentação (Controllers)
+│   ├── Application/   # Casos de uso e serviços
+│   ├── Domain/        # Entidades e interfaces
+│   └── Infra/         # Implementações de repositórios, EF Core
+└── ResearchWeb.sln               # Solução .NET
+#+END_SRC
+
+* Próximas Etapas do Roadmap
+** Fase 2 - Postagens e Interações
+- [ ] Entidade Post com texto, imagem e vídeo
+- [ ] Sistema de likes/dislikes
+- [ ] Comentários com respostas encadeadas
+- [ ] Criar os principais testes dessa etapa
+- [ ] Frontend em React com Vite
+
+** Fase 3 - Grupos e Comunidades
+- [ ] Entidade Group com administração
+- [ ] Sistema de membresia
+- [ ] Regras de moderação
+- [ ] Criar os principais testes dessa etapa
+
+** Fase 4 - Funcionalidades Avançadas
+- [ ] Upload de imagens
+- [ ] Deploy com Docker
+- [ ] verificação dos testes unitários
+- [ ] criação de testes integração
+- [ ] Documentação completa da API
+
+* Tecnologias Utilizadas
+- Backend: ASP.NET Core 9, Entity Framework Core, JWT, bcrypt
+- Banco de Dados: PostgreSQL
+- Frontend (futuro): React, Vite, Tailwind CSS
+- Ferramentas: Scalar, FluentValidation
+
+* Contribuição
+Contribuições são bem-vindas! Sinta-se à vontade para:
+1. Fazer fork do projeto
+2. Criar uma branch para sua feature (git checkout -b feature/AmazingFeature)
+3. Commit suas mudanças (git commit -m 'Add some AmazingFeature')
+4. Push para a branch (git push origin feature/AmazingFeature)
+5. Abrir um Pull Request
+
+* Licença
+Distribuído sob a licença MIT. Veja o arquivo [[file:LICENSE][LICENSE]] para mais informações.
+
+* Contato
+Hugo Oliveira - [[https://github.com/Hugo-Oliveira-RD11][GitHub]]
+
+* Repositório
+[[https://github.com/Hugo-Oliveira-RD11/researchweb][https://github.com/Hugo-Oliveira-RD11/researchweb]]
