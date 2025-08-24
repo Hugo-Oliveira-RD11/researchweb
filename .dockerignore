@@ -1,0 +1,12 @@
+**/bin/
+**/obj/
+**/.git/
+**/.vs/
+**/.devbox/
+**/.idea/
+**/Dockerfile*
+**/compose.yaml
+**/docker-compose.*
+**/.env
+**/*.log
+**/appsettings.Development.json
