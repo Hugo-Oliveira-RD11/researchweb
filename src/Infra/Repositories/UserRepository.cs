@@ -15,25 +15,25 @@ public class UserRepository : IUserRepository
     _context = context;
   }
 
-  public async Task<User> GetByIdAsync(Guid id)
+  public async Task<User?> GetByIdAsync(Guid id)
   {
     var entity = await _context.Users.FindAsync(id);
     return entity == null ? null : ToDomain(entity);
   }
 
-  public async Task<User> GetByEmailAsync(string email)
+  public async Task<User?> GetByEmailAsync(string email)
   {
     var entity = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
     return entity == null ? null : ToDomain(entity);
   }
 
-  public async Task<User> GetByUsernameAsync(string username)
+  public async Task<User?> GetByUsernameAsync(string username)
   {
     var entity = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
     return entity == null ? null : ToDomain(entity);
   }
 
-  public async Task<User> GetByUsernameOrEmailAsync(string usernameOrEmail)
+  public async Task<User?> GetByUsernameOrEmailAsync(string usernameOrEmail)
   {
     var entity = await _context.Users
       .FirstOrDefaultAsync(u => u.Username == usernameOrEmail || u.Email == usernameOrEmail);
@@ -77,11 +77,7 @@ public class UserRepository : IUserRepository
 
   private User ToDomain(UserEntity entity)
   {
-    return new User(
-      entity.Username,
-      entity.Email,
-      entity.PasswordHash,
-      entity.BirthDate)
+    return new User(username: entity.Username, email: entity.Email, passwordHash:entity.PasswordHash, birthDate: entity.BirthDate)
     {
       Id = entity.Id,
         ProfilePictureUrl = entity.ProfilePictureUrl,

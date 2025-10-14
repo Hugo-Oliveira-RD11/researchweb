@@ -18,8 +18,7 @@ public class UserEntity
     [Required]
     public string PasswordHash { get; set; }
 
-    [Required]
-    public DateOnly BirthDate { get; set; }
+    public DateOnly? BirthDate { get; set; }
 
     [MaxLength(500), Url]
     public string? ProfilePictureUrl { get; set; }

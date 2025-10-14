@@ -1,6 +1,10 @@
 {
   "lockfile_version": "1",
   "packages": {
+    "csharp-ls": {
+      "resolved": "github:NixOS/nixpkgs/f937f8ecd1c70efd7e9f90ba13dfb400cf559de4?narHash=sha256-4%2FJd%2BLkQ2ssw8luQVkqVs9spDBVE6h%2Fu%2FhC%2FtzngsPo%3D#csharp-ls",
+      "source": "nixpkg"
+    },
     "dotnet-ef@9.0.8": {
       "last_modified": "2025-08-11T23:54:17Z",
       "resolved": "github:NixOS/nixpkgs/5a983011e0f4b3b286aaa73e011ce32b1449a528#dotnet-ef",

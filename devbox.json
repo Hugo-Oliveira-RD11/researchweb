@@ -5,7 +5,8 @@
     "podman@5.4.1",
     "podman-compose@1.3.0",
     "omnisharp-roslyn@1.39.14",
-    "dotnet-ef@9.0.8"
+    "dotnet-ef@9.0.8",
+    "csharp-ls"
   ],
   "shell": {
     "init_hook": [

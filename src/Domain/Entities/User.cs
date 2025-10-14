@@ -1,24 +1,33 @@
+
 namespace reasearchweb.Domain.Entities;
 
-public class User
+public class User : BaseEntity
 {
-  public Guid Id { get; set; } = Guid.NewGuid();
-  public string Username { get; private set; }
-  public string Email { get; private set; }
-  public string PasswordHash { get; private set; }
-  public DateOnly BirthDate { get; private set; }
+  public string Username { get;  set; }
+  public string Email { get;  set; }
+  public string PasswordHash { get; set; }
+  public DateOnly? BirthDate { get;  set; }
   public string? ProfilePictureUrl { get;  set; }
   public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-  public User(string username, string email, string passwordHash, DateOnly birthDate)
+  public virtual ICollection<Post>? Posts { get;  set; } 
+  public virtual ICollection<Like>? Likes { get;  set; } 
+  public virtual ICollection<Comment>? Comments { get;  set; }
+
+  public User()
+  {
+    Posts = new List<Post>();
+    Likes = new List<Like>();
+    Comments = new List<Comment>();
+  }
+
+  public User(string username, string email, string passwordHash, DateOnly? birthDate):this()
   {
     Username = username;
     Email = email;
     PasswordHash = passwordHash;
     BirthDate = birthDate;
   }
-
-  private User() { }
 
   public void UpdateId(Guid id)
   {
@@ -28,4 +37,5 @@ public class User
   {
     ProfilePictureUrl = url;
   }
+
 }
