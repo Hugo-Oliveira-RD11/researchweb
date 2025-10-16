@@ -28,15 +28,15 @@ O ResearchWeb é uma rede social projetada para compartilhamento de conhecimento
 #+BEGIN_SRC json
 // Configure a connection string no appsettings.json ou appsettings.Development.json
 {
-  "ConnectionStrings": {
-    "DefaultConnection": "Host=localhost;Port=5432;Database=researchweb;Username=postgres;Password=postgres;"
-  }
+    "ConnectionStrings": {
+        "DefaultConnection": "Host=localhost;Port=5432;Database=researchweb;Username=postgres;Password=postgres;"
+    }
 }
 #+END_SRC
 
 ** Método 1: Console (Dotnet CLI)
 *** Pré-requisitos
-- .NET 8.0 SDK
+- .NET 9.0 SDK
 - PostgreSQL instalado localmente
 
 *** Execução
@@ -96,7 +96,6 @@ devbox run start
 
 ** Arquivo docker-compose.yml de Exemplo
 #+BEGIN_SRC yaml
-version: '3.8'
 
 services:
   postgres:
@@ -109,22 +108,29 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - researchweb-net
 
   api:
     build:
       context: .
       dockerfile: Dockerfile
-    environment:
-      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=researchweb;Username=postgres;Password=postgres;"
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
-    volumes:
-      - .:/app
+  environment:
+    - ASPNETCORE_ENVIRONMENT:"Docker"
+    - ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=researchweb;Username=postgres;Password=postgres;"
+  ports:
+    - "8080:8080"
+  depends_on:
+    - postgres
+  networks:
+    - researchweb-net
 
 volumes:
   postgres_data:
+
+networks:
+  researchweb-net:
+    driver: bridge
 #+END_SRC
 
 ** Testar a API
