@@ -412,3 +412,6 @@ obj/
 
 appsettings.*
 appsettings.Development.*
+
+.idea/
+.envrc
