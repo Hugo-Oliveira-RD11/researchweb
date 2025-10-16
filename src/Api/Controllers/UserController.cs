@@ -1,7 +1,7 @@
+using Application.DTOs;
+using Application.UseCases;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using reasearchweb.Application.DTOs;
-using reasearchweb.Application.UseCases;
 
 namespace reasearchweb.API.Controllers;
 

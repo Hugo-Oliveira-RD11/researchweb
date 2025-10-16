@@ -2,9 +2,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using reasearchweb.Application.UseCases;
-using reasearchweb.Infra.Data;
-using researchweb.Infra.DependecyInjection;
+using Application.UseCases;
+using Infra.Data;
+using Infra.DependecyInjection;
+using Infra.Data;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);

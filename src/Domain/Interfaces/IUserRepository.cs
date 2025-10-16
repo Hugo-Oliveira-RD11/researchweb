@@ -1,6 +1,6 @@
-using reasearchweb.Domain.Entities;
+using Domain.Entities;
 
-namespace reasearchweb.Application.Interfaces;
+namespace Domain.Interfaces;
 
 public interface IUserRepository
 {

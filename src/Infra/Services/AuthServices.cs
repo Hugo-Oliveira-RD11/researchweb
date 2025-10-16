@@ -1,10 +1,10 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Application.Services;
 using Microsoft.IdentityModel.Tokens;
-using reasearchweb.Application.Services;
 
-namespace reasearchweb.Infra.Services;
+namespace researchweb.Infra.Services;
 
 public class AuthService : IAuthService
 {

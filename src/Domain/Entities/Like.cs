@@ -1,4 +1,4 @@
-namespace reasearchweb.Domain.Entities;
+namespace Domain.Entities;
 
 public class Like : BaseEntity
 {

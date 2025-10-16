@@ -1,4 +1,4 @@
-namespace reasearchweb.Application.DTOs;
+namespace Application.DTOs;
 
 public class UserDto
 {

@@ -1,9 +1,9 @@
-using reasearchweb.Application.DTOs;
-using reasearchweb.Application.Interfaces;
-using reasearchweb.Application.Services;
-using reasearchweb.Domain.Entities;
+using Application.DTOs;
+using Application.Services;
+using Domain.Entities;
+using Domain.Interfaces;
 
-namespace reasearchweb.Application.UseCases;
+namespace Application.UseCases;
 
 public class UserUseCases
 {

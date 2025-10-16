@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace reasearchweb.Infra.Data.Entities;
+namespace Infra.Data.Entities;
 
 [Table("User")]
 public class UserEntity

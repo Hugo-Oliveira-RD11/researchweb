@@ -1,6 +1,6 @@
-using reasearchweb.Domain.Entities;
+using Domain.Entities;
 
-namespace researchWeb.Domain.Interfaces
+namespace Domain.Interfaces
 {
   public interface ICommentRepository
   {

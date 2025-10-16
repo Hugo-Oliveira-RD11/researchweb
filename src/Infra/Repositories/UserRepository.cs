@@ -1,10 +1,10 @@
+using Domain.Entities;
+using Domain.Interfaces;
+using Infra.Data;
 using Microsoft.EntityFrameworkCore;
-using reasearchweb.Application.Interfaces;
-using reasearchweb.Domain.Entities;
-using reasearchweb.Infra.Data;
-using reasearchweb.Infra.Data.Entities;
+using Infra.Data.Entities;
 
-namespace reasearchweb.Infra.Repositories;
+namespace Infra.Repositories;
 
 public class UserRepository : IUserRepository
 {

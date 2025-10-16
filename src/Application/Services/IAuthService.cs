@@ -1,4 +1,4 @@
-namespace reasearchweb.Application.Services;
+namespace Application.Services;
 
 public interface IAuthService
 {

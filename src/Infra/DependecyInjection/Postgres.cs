@@ -1,12 +1,15 @@
+using Application.Services;
+using Domain.Interfaces;
+using Infra.Data;
+using Infra.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using reasearchweb.Application.Interfaces;
-using reasearchweb.Application.Services;
-using reasearchweb.Infra.Data;
-using reasearchweb.Infra.Repositories;
-using reasearchweb.Infra.Services;
+using researchweb.Infra.Services;
 
-namespace researchweb.Infra.DependecyInjection;
+// using researchweb.Infra.Repositories;
+// using researchweb.Infra.Services;
+
+namespace Infra.DependecyInjection;
 
 public static class PostgreSQL
 {
